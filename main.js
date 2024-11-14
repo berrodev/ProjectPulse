@@ -59,6 +59,17 @@ class Project {
     this.startDate = startDate;
     this.tasks = tasks;
   }
+  // method to add a task to the project array
+  addTask(task) {
+    this.tasks.push(task);
+  }
+  // TODO: method to get a project summary showing the number of tasks in each state, using array methods (map, filter, reduce)
+
+  // TODO: method to sort tasks by deadline
+
+  // TODO: Filter tasks by state
+  // TODO: Calculate the number of days left to finish the project
+  // TODO: Get critical tasks
 }
 
 class Task {
@@ -69,3 +80,7 @@ class Task {
     this.deadLine = deadLine;
   }
 }
+
+// TODO: Simulate an API request to get projects details
+// TODO: Simulate an API request to refresh the project state
+// TODO: Implement an observer pattern to notify the project state is completed
