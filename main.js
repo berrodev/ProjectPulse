@@ -50,3 +50,5 @@ const projects = [
     ],
   },
 ];
+
+// TODO: change projects object structure to class
