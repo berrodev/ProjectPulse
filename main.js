@@ -52,3 +52,20 @@ const projects = [
 ];
 
 // TODO: change projects object structure to class
+class Project {
+  constructor(id, name, startDate, tasks) {
+    this.id = id;
+    this.name = name;
+    this.startDate = startDate;
+    this.tasks = tasks;
+  }
+}
+
+class Task {
+  constructor(id, description, state, deadLine) {
+    this.id = id;
+    this.description = description;
+    this.state = state;
+    this.deadLine = deadLine;
+  }
+}
