@@ -1,57 +1,3 @@
-const projects = [
-  {
-    id: 1,
-    name: 'Project 1',
-    startDate: '2024-01-01',
-    tasks: [
-      {
-        id: 1,
-        description: 'Task 1',
-        status: 'pending',
-        deadLine: '2024-01-15',
-      },
-      {
-        id: 2,
-        description: 'Task 2',
-        status: 'active',
-        deadLine: '2024-01-20',
-      },
-      {
-        id: 3,
-        description: 'Task 3',
-        status: 'completed',
-        deadLine: '2024-01-25',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Project 2',
-    startDate: '2024-02-05',
-    tasks: [
-      {
-        id: 1,
-        description: 'Task 1',
-        status: 'pending',
-        deadLine: '2024-02-15',
-      },
-      {
-        id: 2,
-        description: 'Task 2',
-        status: 'active',
-        deadLine: '2024-02-20',
-      },
-      {
-        id: 3,
-        description: 'Task 3',
-        status: 'completed',
-        deadLine: '2024-02-25',
-      },
-    ],
-  },
-];
-
-// Change projects object structure to class
 class Project {
   constructor(id, name, startDate, tasks) {
     this.id = id;
@@ -105,6 +51,19 @@ const filterTasks = (project, tasksFilter) => {
   return project.tasks.filter(tasksFilter);
 };
 // TODO: Calculate the number of days left to finish the project
+const daysLeft = (project) => {
+  // Get all tasks but the completed ones and sort them by deadline
+  const pendingTasks = project.tasks
+    .filter((task) => task.status !== 'completed')
+    .sort((a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine));
+
+  // Get the deadline of the last task
+  const lastTask = pendingTasks[pendingTasks.length - 1];
+  console.log(lastTask);
+  const lastTaskDeadline = new Date(lastTask.deadLine);
+  console.log(lastTaskDeadline);
+  return Math.ceil((lastTaskDeadline - new Date()) / (1000 * 60 * 60 * 24));
+};
 // TODO: Get critical tasks
 // TODO: Simulate an API request to get projects details
 // TODO: Simulate an API request to refresh the project status
@@ -115,20 +74,23 @@ const filterTasks = (project, tasksFilter) => {
 // Create a project object and add new tasks
 const project1 = new Project(1, 'Project 1', '2024-10-01', [
   new Task(1, 'Task 1', 'pending', '2024-03-15'),
-  new Task(2, 'Task 2', 'active', '2024-01-20'),
+  new Task(2, 'Task 2', 'active', '2025-01-20'),
   new Task(3, 'Task 3', 'completed', '2024-01-25'),
   new Task(4, 'Task 4', 'pending', '2023-12-10'),
 ]);
 console.log(project1);
 
 // Add a new task to the project
+
 project1.addTask(new Task(4, 'Task 4', 'pending', '2024-01-30'));
 console.log(project1);
 
 // Get the project summary
+console.log('Project summary');
 console.log(project1.summary());
 
 // Get sorted tasks
+console.log('Sorted tasks');
 console.log(project1.sortTasks());
 
 // Filter project completed tasks
@@ -142,3 +104,7 @@ console.log(filterTasks(project1, currentYearTasksFilter));
 // Filter last year tasks
 console.log('Filter last year tasks');
 console.log(filterTasks(project1, lastYearTasksFilter));
+
+// Get the number of days left to finish the project
+console.log('Days left to finish the project');
+console.log(`${daysLeft(project1)} days left to finish the project`);
