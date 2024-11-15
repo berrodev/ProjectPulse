@@ -152,7 +152,7 @@ const criticalTasks = (project) => {
   );
 };
 
-// TODO: Simulate an API request to get the database project data
+// Simulate an API request to get the database project data
 const fetchProjectData = (projectId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -171,7 +171,7 @@ const fetchProjectData = (projectId) => {
   });
 };
 
-// TODO: Simulate an API request to update the database task status and return the updated project
+// Simulate an API request to update the database task status and return the updated project
 const updateTask = (project, taskID, newStatus) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
