@@ -206,37 +206,37 @@ project1.addTask(newTask);
 console.log(project1);
 
 // Get the project summary
-console.log('Project summary');
+console.log('\nProject summary:');
 console.log(project1.summary());
 
 // Get sorted tasks
-console.log('Sorted tasks');
+console.log('\nSorted tasks:');
 console.log(project1.sortTasks());
 
 // Filter project completed tasks
-console.log('Filter tasks by status "Completed"');
+console.log('\nFilter tasks by status "Completed":');
 console.log(filterTasks(project1, completedTasksFilter));
 
 // Filter current year tasks
-console.log('Filter current year tasks');
+console.log('\nFilter current year tasks:');
 console.log(filterTasks(project1, currentYearTasksFilter));
 
 // Filter last year tasks
-console.log('Filter last year tasks');
+console.log('\nFilter last year tasks:');
 console.log(filterTasks(project1, lastYearTasksFilter));
 
 // Get the number of days left to finish the project
-console.log(`${totalProjectDays(project1)} days left to finish the project`);
+console.log(`\n${totalProjectDays(project1)} days left to finish the project`);
 
 // Get critical tasks
-console.log('Critical tasks');
+console.log('\nCritical tasks:');
 console.log(criticalTasks(project1));
 
 // ### Testing the API request ###
 const getProject = async (projectId) => {
   try {
     const project = await fetchProjectData(projectId);
-    console.log('API request successful');
+    console.log('\nAPI request successful');
     console.log(project);
   } catch (error) {
     console.error(error);
@@ -244,13 +244,15 @@ const getProject = async (projectId) => {
 };
 
 // ### Testing the API request to get project data ###
+console.log('\nFetching project data...');
 getProject(1);
 
 // ### Testing the API request to update task status ###
 const updateTaskStatus = async (project, taskID, newStatus) => {
   try {
     const updatedProject = await updateTask(project, taskID, newStatus);
-    console.log('API UPDATE request successful');
+    console.log('\nAPI UPDATE request successful');
+    console.log('Updated project:');
     console.log(updatedProject);
     // Notify the observers
     taskNotifications.notifyAll(newStatus); // Notificar a los observadores
@@ -260,7 +262,7 @@ const updateTaskStatus = async (project, taskID, newStatus) => {
 };
 
 // ### Testing the API request to update task status ###
-console.log('Update task status');
+console.log('\nUpdating task status...');
 updateTaskStatus(project1, 4, 'completed');
 updateTaskStatus(project1, 2, 'pending');
 
@@ -278,7 +280,7 @@ class TaskNotifications {
 }
 class Observer {
   update(taskStatus) {
-    console.log('OBSERVER NOTIFICATION:');
+    console.log('\nOBSERVER NOTIFICATION:');
     console.log(`Task status has been updated to: ${taskStatus}`);
   }
 }
