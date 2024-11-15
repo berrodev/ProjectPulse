@@ -152,7 +152,7 @@ const criticalTasks = (project) => {
   );
 };
 
-// Simulate an API request to get the database project data
+// Simulate an API request to get the dummy database project data
 const fetchProjectData = (projectId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -264,7 +264,7 @@ console.log('Update task status');
 updateTaskStatus(project1, 4, 'completed');
 updateTaskStatus(project1, 2, 'pending');
 
-// TODO: Implement an observer pattern to notify the project status changes
+// Implement an observer pattern to notify the project status changes
 class TaskNotifications {
   constructor() {
     this.observers = [];
@@ -282,7 +282,7 @@ class Observer {
     console.log(`Task status has been updated to: ${taskStatus}`);
   }
 }
-// Uso
+// Instantiate the TaskNotifications class and add an observer
 const taskNotifications = new TaskNotifications();
 const observer1 = new Observer();
 taskNotifications.addObserver(observer1);
