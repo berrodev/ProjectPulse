@@ -117,20 +117,26 @@ const lastYearTasksFilter = (task) =>
 const filterTasks = (project, tasksFilter) => {
   return project.tasks.filter(tasksFilter);
 };
-// Calculate the number of days left to finish the project
-const daysLeft = (project) => {
-  // Get all tasks but the completed ones and sort them by deadline
-  // TODO: Implement a better way to get the pending tasks using the filterTasks function
-  // TODO: total days using reduce
-  const pendingTasks = project.tasks
-    .filter((task) => task.status !== 'completed')
-    .sort((a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine));
 
-  // Get the deadline of the last task
-  const lastTask = pendingTasks[pendingTasks.length - 1];
-  const lastTaskDeadline = new Date(lastTask.deadLine);
-  return Math.ceil((lastTaskDeadline - new Date()) / (1000 * 60 * 60 * 24));
+// Sum the number of days left to finish the project
+const totalProjectDays = (project) => {
+  const today = new Date(); // Get today's date
+
+  return project.tasks.reduce((totalDays, task) => {
+    if (task.status !== 'completed') {
+      // date is in the past
+      if (new Date(task.deadLine) < today) {
+        return totalDays;
+      }
+      const diffTime = new Date(task.deadLine) - today;
+      // Difference between the deadline and today's date
+      const diffDays = diffTime / (1000 * 3600 * 24); // Convert the difference to days
+      totalDays += diffDays;
+    }
+    return Math.ceil(totalDays);
+  }, 0); // The initial value of the accumulator is 0
 };
+
 // Get critical tasks (3 days or less to finish)
 // TODO: Implement a better way to get the critical tasks using the filterTasks function
 
@@ -186,14 +192,15 @@ const updateTask = (project, taskID, newStatus) => {
 
 // Create a project object and add new tasks
 const project1 = new Project(1, 'Project 1', '2024-10-01', [
-  new Task(1, 'Task 1', 'pending', '2024-11-16'),
-  new Task(2, 'Task 2', 'active', '2025-01-20'),
-  new Task(3, 'Task 3', 'completed', '2024-11-10'),
-  new Task(4, 'Task 4', 'pending', '2024-11-29'),
+  new Task(1, 'Task 1', 'pending', '2024-11-20'),
+  new Task(2, 'Task 2', 'active', '2024-11-18'),
+  new Task(3, 'Task 3', 'completed', '2024-11-12'),
+  new Task(4, 'Task 4', 'pending', '2024-12-16'),
+  new Task(5, 'Task 5', 'pending', '2024-11-16'),
 ]);
 
 // Add a new task to the project
-const newTask = new Task(5, 'Task 5', 'pending', '2024-01-30');
+const newTask = new Task(6, 'Task 6', 'pending', '2024-01-30');
 project1.addTask(newTask);
 
 console.log(project1);
@@ -207,7 +214,7 @@ console.log('Sorted tasks');
 console.log(project1.sortTasks());
 
 // Filter project completed tasks
-console.log('Filter tasks by status');
+console.log('Filter tasks by status "Completed"');
 console.log(filterTasks(project1, completedTasksFilter));
 
 // Filter current year tasks
@@ -219,8 +226,7 @@ console.log('Filter last year tasks');
 console.log(filterTasks(project1, lastYearTasksFilter));
 
 // Get the number of days left to finish the project
-console.log('Days left to finish the project');
-console.log(`${daysLeft(project1)} days left to finish the project`);
+console.log(`${totalProjectDays(project1)} days left to finish the project`);
 
 // Get critical tasks
 console.log('Critical tasks');
