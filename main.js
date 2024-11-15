@@ -65,7 +65,7 @@ class Project {
   }
   // Method to get a project summary showing the number of tasks in each status, using array methods (map, filter, reduce)
   summary() {
-    const taskStatusAcc = { active: 0, pending: 0, completed: 0 };
+    const INITIAL_STATUS = { active: 0, pending: 0, completed: 0 };
     const statusCount = this.tasks.reduce((acc, task) => {
       task.status == 'active'
         ? (acc.active += 1)
@@ -73,7 +73,7 @@ class Project {
         ? (acc.pending += 1)
         : (acc.completed += 1);
       return acc;
-    }, taskStatusAcc);
+    }, INITIAL_STATUS);
     return statusCount;
   }
 
