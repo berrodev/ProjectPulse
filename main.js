@@ -240,11 +240,13 @@ const getProject = async (projectId) => {
 getProject(1);
 
 // ### Testing the API request to update task status ###
-const updateTaskStatus = async (project, task, newStatus) => {
+const updateTaskStatus = async (project, taskID, newStatus) => {
   try {
-    const updatedProject = await updateTask(project, task, newStatus);
+    const updatedProject = await updateTask(project, taskID, newStatus);
     console.log('API UPDATE request successful');
     console.log(updatedProject);
+    // Notify the observers
+    taskNotifications.notifyAll(newStatus); // Notificar a los observadores
   } catch (error) {
     console.error(error);
   }
@@ -255,4 +257,25 @@ console.log('Update task status');
 updateTaskStatus(project1, 4, 'completed');
 updateTaskStatus(project1, 2, 'pending');
 
-// TODO: Implement an observer pattern to notify the project status is completed
+// TODO: Implement an observer pattern to notify the project status changes
+class TaskNotifications {
+  constructor() {
+    this.observers = [];
+  }
+  addObserver(observer) {
+    this.observers.push(observer);
+  }
+  notifyAll(taskStatus) {
+    this.observers.forEach((observer) => observer.update(taskStatus));
+  }
+}
+class Observer {
+  update(taskStatus) {
+    console.log('OBSERVER NOTIFICATION:');
+    console.log(`Task status has been updated to: ${taskStatus}`);
+  }
+}
+// Uso
+const taskNotifications = new TaskNotifications();
+const observer1 = new Observer();
+taskNotifications.addObserver(observer1);
