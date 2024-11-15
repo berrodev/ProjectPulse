@@ -84,3 +84,20 @@ class Task {
 // TODO: Simulate an API request to get projects details
 // TODO: Simulate an API request to refresh the project state
 // TODO: Implement an observer pattern to notify the project state is completed
+
+// ### Testing the Project class ###
+
+// Create a project object and add new tasks
+const project1 = new Project(1, 'Project 1', '2024-01-01', [
+  new Task(1, 'Task 1', 'pending', '2024-01-15'),
+  new Task(2, 'Task 2', 'active', '2024-01-20'),
+  new Task(3, 'Task 3', 'completed', '2024-01-25'),
+]);
+console.log(project1);
+
+// Add a new task to the project
+project1.addTask(new Task(4, 'Task 4', 'pending', '2024-01-30'));
+console.log(project1);
+
+// Get the project summary
+console.log(project1.summary());
