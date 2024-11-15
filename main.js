@@ -121,17 +121,6 @@ const fetchProjectData = (projectId) => {
   });
 };
 
-// Get project details using the API request
-const getProjectDetails = async () => {
-  try {
-    const project = await simulateApiRequest(1);
-    console.log('API request successful');
-    console.log(project);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // TODO: Simulate an API request to update task status
 const updateTaskStatus = () => {
   return new Promise((resolve, reject) => {
@@ -203,7 +192,18 @@ console.log('Critical tasks');
 console.log(criticalTasks(project1));
 
 // ### Testing the API request ###
-fetchProjectData();
+const getProject = async (projectId) => {
+  try {
+    const project = await fetchProjectData(projectId);
+    console.log('API request successful');
+    console.log(project);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// ### Testing the API request to get project data ###
+getProject(123213);
 
 // ### Testing the API request to update task status ###
 updateTask(project1, newTask, 'completed');
