@@ -7,19 +7,19 @@ const projects = [
       {
         id: 1,
         description: 'Task 1',
-        state: 'pending',
+        status: 'pending',
         deadLine: '2024-01-15',
       },
       {
         id: 2,
         description: 'Task 2',
-        state: 'active',
+        status: 'active',
         deadLine: '2024-01-20',
       },
       {
         id: 3,
         description: 'Task 3',
-        state: 'completed',
+        status: 'completed',
         deadLine: '2024-01-25',
       },
     ],
@@ -32,26 +32,26 @@ const projects = [
       {
         id: 1,
         description: 'Task 1',
-        state: 'pending',
+        status: 'pending',
         deadLine: '2024-02-15',
       },
       {
         id: 2,
         description: 'Task 2',
-        state: 'active',
+        status: 'active',
         deadLine: '2024-02-20',
       },
       {
         id: 3,
         description: 'Task 3',
-        state: 'completed',
+        status: 'completed',
         deadLine: '2024-02-25',
       },
     ],
   },
 ];
 
-// TODO: change projects object structure to class
+// Change projects object structure to class
 class Project {
   constructor(id, name, startDate, tasks) {
     this.id = id;
@@ -59,31 +59,43 @@ class Project {
     this.startDate = startDate;
     this.tasks = tasks;
   }
-  // method to add a task to the project array
+  // Method to add a task to the project array
   addTask(task) {
     this.tasks.push(task);
   }
-  // TODO: method to get a project summary showing the number of tasks in each state, using array methods (map, filter, reduce)
+  // Method to get a project summary showing the number of tasks in each status, using array methods (map, filter, reduce)
+  summary() {
+    const taskStatusAcc = { active: 0, pending: 0, completed: 0 };
+    const statusCount = this.tasks.reduce((acc, task) => {
+      task.status == 'active'
+        ? (acc.active += 1)
+        : task.status == 'pending'
+        ? (acc.pending += 1)
+        : (acc.completed += 1);
+      return acc;
+    }, taskStatusAcc);
+    return statusCount;
+  }
 
   // TODO: method to sort tasks by deadline
 
-  // TODO: Filter tasks by state
+  // TODO: Filter tasks by status
   // TODO: Calculate the number of days left to finish the project
   // TODO: Get critical tasks
 }
 
 class Task {
-  constructor(id, description, state, deadLine) {
+  constructor(id, description, status, deadLine) {
     this.id = id;
     this.description = description;
-    this.state = state;
+    this.status = status;
     this.deadLine = deadLine;
   }
 }
 
 // TODO: Simulate an API request to get projects details
-// TODO: Simulate an API request to refresh the project state
-// TODO: Implement an observer pattern to notify the project state is completed
+// TODO: Simulate an API request to refresh the project status
+// TODO: Implement an observer pattern to notify the project status is completed
 
 // ### Testing the Project class ###
 
