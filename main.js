@@ -139,7 +139,7 @@ const updateTaskStatus = (taskId, newStatus) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
-      if (Math.random() < 0.5) {
+      if (Math.random() < 0.2) {
         reject('Error: API request failed, failed to update task status');
       }
       resolve(`Task ${taskId} status updated to ${newStatus}`);
@@ -157,9 +157,6 @@ const updateTask = async (taskId, newStatus) => {
     console.error(error);
   }
 };
-// TODO: Implement an observer pattern to notify the project status is completed
-
-// ### Testing the Project class ###
 
 // Create a project object and add new tasks
 const project1 = new Project(1, 'Project 1', '2024-10-01', [
@@ -208,3 +205,5 @@ getProjectDetails();
 
 // ### Testing the API request to update task status ###
 updateTask(1, 'completed');
+
+// TODO: Implement an observer pattern to notify the project status is completed
