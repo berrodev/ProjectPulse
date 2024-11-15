@@ -194,7 +194,7 @@ const updateTask = (project, taskID, newStatus) => {
 const project1 = new Project(1, 'Project 1', '2024-10-01', [
   new Task(1, 'Task 1', 'pending', '2024-11-20'),
   new Task(2, 'Task 2', 'active', '2024-11-18'),
-  new Task(3, 'Task 3', 'completed', '2024-11-12'),
+  new Task(3, 'Task 3', 'completed', '2023-11-12'),
   new Task(4, 'Task 4', 'pending', '2024-12-16'),
   new Task(5, 'Task 5', 'pending', '2024-11-16'),
 ]);
