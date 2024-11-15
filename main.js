@@ -40,7 +40,7 @@ class Task {
   }
 }
 
-// TODO: Filter tasks by status
+// Filter tasks by status
 const completedTasksFilter = (task) => task.status === 'completed';
 const currentYearTasksFilter = (task) =>
   new Date(task.deadLine).getFullYear() === new Date().getFullYear();
@@ -83,7 +83,7 @@ const simulateApiRequest = (projectId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
-      if (Math.random() < 0.5) {
+      if (Math.random() < 0.1) {
         reject('Error: API request failed, failed to get project details');
       }
       resolve({
@@ -133,24 +133,28 @@ const getProjectDetails = async () => {
 };
 
 // TODO: Simulate an API request to update task status
-const updateTaskStatus = (taskId, newStatus) => {
+const updateTaskStatus = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
-      if (Math.random() < 0.2) {
+      if (Math.random() < 0.1) {
         reject('Error: API request failed, failed to update task status');
       }
-      resolve(`Task ${taskId} status updated to ${newStatus}`);
+      resolve(`Task status updated successfully`);
     }, 2000);
   });
 };
 
-// Update task status using the API request
-const updateTask = async (taskId, newStatus) => {
+// Update task status using the API request and get the updated project
+const updateTask = async (project, task, newStatus) => {
   try {
-    const response = await updateTaskStatus(taskId, newStatus);
+    const response = await updateTaskStatus();
     console.log('API request successful');
     console.log(response);
+    // Update the task status
+    task.status = newStatus;
+    console.log(`Task ${task.id} status updated successfully`);
+    console.log(project);
   } catch (error) {
     console.error(error);
   }
@@ -166,8 +170,8 @@ const project1 = new Project(1, 'Project 1', '2024-10-01', [
 console.log(project1);
 
 // Add a new task to the project
-
-project1.addTask(new Task(4, 'Task 4', 'pending', '2024-01-30'));
+const newTask = new Task(4, 'Task 4', 'pending', '2024-01-30');
+project1.addTask(newTask);
 console.log(project1);
 
 // Get the project summary
@@ -202,6 +206,6 @@ console.log(criticalTasks(project1));
 getProjectDetails();
 
 // ### Testing the API request to update task status ###
-updateTask(1, 'completed');
+updateTask(project1, newTask, 'completed');
 
 // TODO: Implement an observer pattern to notify the project status is completed
