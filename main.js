@@ -77,7 +77,12 @@ class Project {
     return statusCount;
   }
 
-  // TODO: method to sort tasks by deadline
+  // method to sort tasks by deadline
+  sortTasks() {
+    return this.tasks.sort(
+      (a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine)
+    );
+  }
 
   // TODO: Filter tasks by status
   // TODO: Calculate the number of days left to finish the project
@@ -100,8 +105,8 @@ class Task {
 // ### Testing the Project class ###
 
 // Create a project object and add new tasks
-const project1 = new Project(1, 'Project 1', '2024-01-01', [
-  new Task(1, 'Task 1', 'pending', '2024-01-15'),
+const project1 = new Project(1, 'Project 1', '2024-10-01', [
+  new Task(1, 'Task 1', 'pending', '2024-03-15'),
   new Task(2, 'Task 2', 'active', '2024-01-20'),
   new Task(3, 'Task 3', 'completed', '2024-01-25'),
 ]);
@@ -113,3 +118,6 @@ console.log(project1);
 
 // Get the project summary
 console.log(project1.summary());
+
+// Get sorted tasks
+console.log(project1.sortTasks());
