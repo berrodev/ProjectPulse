@@ -83,10 +83,6 @@ class Project {
       (a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine)
     );
   }
-
-  // TODO: Filter tasks by status
-  // TODO: Calculate the number of days left to finish the project
-  // TODO: Get critical tasks
 }
 
 class Task {
@@ -98,6 +94,18 @@ class Task {
   }
 }
 
+// TODO: Filter tasks by status
+const completedTasksFilter = (task) => task.status === 'completed';
+const currentYearTasksFilter = (task) =>
+  new Date(task.deadLine).getFullYear() === new Date().getFullYear();
+const lastYearTasksFilter = (task) =>
+  new Date(task.deadLine).getFullYear() === new Date().getFullYear() - 1;
+
+const filterTasks = (project, tasksFilter) => {
+  return project.tasks.filter(tasksFilter);
+};
+// TODO: Calculate the number of days left to finish the project
+// TODO: Get critical tasks
 // TODO: Simulate an API request to get projects details
 // TODO: Simulate an API request to refresh the project status
 // TODO: Implement an observer pattern to notify the project status is completed
@@ -109,6 +117,7 @@ const project1 = new Project(1, 'Project 1', '2024-10-01', [
   new Task(1, 'Task 1', 'pending', '2024-03-15'),
   new Task(2, 'Task 2', 'active', '2024-01-20'),
   new Task(3, 'Task 3', 'completed', '2024-01-25'),
+  new Task(4, 'Task 4', 'pending', '2023-12-10'),
 ]);
 console.log(project1);
 
@@ -121,3 +130,15 @@ console.log(project1.summary());
 
 // Get sorted tasks
 console.log(project1.sortTasks());
+
+// Filter project completed tasks
+console.log('Filter tasks by status');
+console.log(filterTasks(project1, completedTasksFilter));
+
+// Filter current year tasks
+console.log('Filter current year tasks');
+console.log(filterTasks(project1, currentYearTasksFilter));
+
+// Filter last year tasks
+console.log('Filter last year tasks');
+console.log(filterTasks(project1, lastYearTasksFilter));
