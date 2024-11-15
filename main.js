@@ -60,9 +60,7 @@ const daysLeft = (project) => {
 
   // Get the deadline of the last task
   const lastTask = pendingTasks[pendingTasks.length - 1];
-  console.log(lastTask);
   const lastTaskDeadline = new Date(lastTask.deadLine);
-  console.log(lastTaskDeadline);
   return Math.ceil((lastTaskDeadline - new Date()) / (1000 * 60 * 60 * 24));
 };
 // Get critical tasks (3 days or less to finish)
