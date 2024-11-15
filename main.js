@@ -1,3 +1,70 @@
+DATABASE = {
+  projects: [
+    {
+      id: 1,
+      name: 'Project 1',
+      startDate: '2024-10-01',
+      tasks: [
+        {
+          id: 1,
+          description: 'Task 1',
+          status: 'pending',
+          deadLine: '2024-11-16',
+        },
+        {
+          id: 2,
+          description: 'Task 2',
+          status: 'active',
+          deadLine: '2025-01-20',
+        },
+        {
+          id: 3,
+          description: 'Task 3',
+          status: 'completed',
+          deadLine: '2024-11-10',
+        },
+        {
+          id: 4,
+          description: 'Task 4',
+          status: 'pending',
+          deadLine: '2024-11-29',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Project 2',
+      startDate: '2024-10-01',
+      tasks: [
+        {
+          id: 1,
+          description: 'Task 1',
+          status: 'pending',
+          deadLine: '2024-11-16',
+        },
+        {
+          id: 2,
+          description: 'Task 2',
+          status: 'active',
+          deadLine: '2025-01-20',
+        },
+        {
+          id: 3,
+          description: 'Task 3',
+          status: 'completed',
+          deadLine: '2024-11-10',
+        },
+        {
+          id: 4,
+          description: 'Task 4',
+          status: 'pending',
+          deadLine: '2024-11-29',
+        },
+      ],
+    },
+  ],
+};
+
 class Project {
   constructor(id, name, startDate, tasks) {
     this.id = id;
@@ -78,75 +145,42 @@ const criticalTasks = (project) => {
   );
 };
 
-// TODO: Simulate an API request to get project data
+// TODO: Simulate an API request to get the database project data
 const fetchProjectData = (projectId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
       if (Math.random() < 0.1) {
-        reject('Error: API request failed, failed to get project details');
+        reject('Error: API request failed, failed to get project data');
       }
-      resolve({
-        id: projectId,
-        name: 'Project 1',
-        startDate: '2024-10-01',
-        tasks: [
-          {
-            id: 1,
-            description: 'Task 1',
-            status: 'pending',
-            deadLine: '2024-11-16',
-          },
-          {
-            id: 2,
-            description: 'Task 2',
-            status: 'active',
-            deadLine: '2025-01-20',
-          },
-          {
-            id: 3,
-            description: 'Task 3',
-            status: 'completed',
-            deadLine: '2024-11-10',
-          },
-          {
-            id: 4,
-            description: 'Task 4',
-            status: 'pending',
-            deadLine: '2024-11-29',
-          },
-        ],
-      });
-    }, 1000);
+      const project = DATABASE.projects.find(
+        (project) => project.id === projectId
+      );
+      if (!project) {
+        reject('Error: Project not found');
+      }
+      resolve(project);
+    }, 2000);
   });
 };
 
-// TODO: Simulate an API request to update task status
-const updateTaskStatus = () => {
+// TODO: Simulate an API request to update the database task status and return the updated project
+const updateTask = (project, taskID, newStatus) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
       if (Math.random() < 0.1) {
         reject('Error: API request failed, failed to update task status');
       }
-      resolve(`Task status updated successfully`);
+      const task = project.tasks.find((task) => task.id === taskID);
+      if (!task) {
+        reject('Error: Task not found');
+      }
+      task.status = newStatus;
+
+      resolve(project);
     }, 2000);
   });
-};
-
-// Update task status using the API request and get the updated project
-const updateTask = async (project, task, newStatus) => {
-  try {
-    const response = await updateTaskStatus();
-    console.log('API request successful');
-    console.log(response);
-    // Update the task status
-    task.status = newStatus;
-    console.log(`Task ${task.id} status updated successfully`);
-    console.log(project);
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 // Create a project object and add new tasks
@@ -159,7 +193,7 @@ const project1 = new Project(1, 'Project 1', '2024-10-01', [
 console.log(project1);
 
 // Add a new task to the project
-const newTask = new Task(4, 'Task 4', 'pending', '2024-01-30');
+const newTask = new Task(5, 'Task 5', 'pending', '2024-01-30');
 project1.addTask(newTask);
 console.log(project1);
 
@@ -203,9 +237,22 @@ const getProject = async (projectId) => {
 };
 
 // ### Testing the API request to get project data ###
-getProject(123213);
+getProject(1);
 
 // ### Testing the API request to update task status ###
-updateTask(project1, newTask, 'completed');
+const updateTaskStatus = async (project, task, newStatus) => {
+  try {
+    const updatedProject = await updateTask(project, task, newStatus);
+    console.log('API UPDATE request successful');
+    console.log(updatedProject);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// ### Testing the API request to update task status ###
+console.log('Update task status');
+updateTaskStatus(project1, 4, 'completed');
+updateTaskStatus(project1, 2, 'pending');
 
 // TODO: Implement an observer pattern to notify the project status is completed
