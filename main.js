@@ -50,9 +50,10 @@ const lastYearTasksFilter = (task) =>
 const filterTasks = (project, tasksFilter) => {
   return project.tasks.filter(tasksFilter);
 };
-// TODO: Calculate the number of days left to finish the project
+// Calculate the number of days left to finish the project
 const daysLeft = (project) => {
   // Get all tasks but the completed ones and sort them by deadline
+  // TODO: Implement a better way to get the pending tasks using the filterTasks function
   const pendingTasks = project.tasks
     .filter((task) => task.status !== 'completed')
     .sort((a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine));
@@ -64,7 +65,21 @@ const daysLeft = (project) => {
   console.log(lastTaskDeadline);
   return Math.ceil((lastTaskDeadline - new Date()) / (1000 * 60 * 60 * 24));
 };
-// TODO: Get critical tasks
+// Get critical tasks (3 days or less to finish)
+// TODO: Implement a better way to get the critical tasks using the filterTasks function
+
+const criticalTasks = (project) => {
+  const pendingTasks = project.tasks.filter(
+    (task) => task.status !== 'completed'
+  );
+  return pendingTasks.filter(
+    (task) =>
+      Math.ceil(
+        (new Date(task.deadLine) - new Date()) / (1000 * 60 * 60 * 24)
+      ) <= 3
+  );
+};
+
 // TODO: Simulate an API request to get projects details
 // TODO: Simulate an API request to refresh the project status
 // TODO: Implement an observer pattern to notify the project status is completed
@@ -73,10 +88,10 @@ const daysLeft = (project) => {
 
 // Create a project object and add new tasks
 const project1 = new Project(1, 'Project 1', '2024-10-01', [
-  new Task(1, 'Task 1', 'pending', '2024-03-15'),
+  new Task(1, 'Task 1', 'pending', '2024-11-16'),
   new Task(2, 'Task 2', 'active', '2025-01-20'),
-  new Task(3, 'Task 3', 'completed', '2024-01-25'),
-  new Task(4, 'Task 4', 'pending', '2023-12-10'),
+  new Task(3, 'Task 3', 'completed', '2024-11-10'),
+  new Task(4, 'Task 4', 'pending', '2024-11-29'),
 ]);
 console.log(project1);
 
@@ -108,3 +123,7 @@ console.log(filterTasks(project1, lastYearTasksFilter));
 // Get the number of days left to finish the project
 console.log('Days left to finish the project');
 console.log(`${daysLeft(project1)} days left to finish the project`);
+
+// Get critical tasks
+console.log('Critical tasks');
+console.log(criticalTasks(project1));
