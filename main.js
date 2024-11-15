@@ -83,12 +83,11 @@ const criticalTasks = (project) => {
 // TODO: Simulate an API request to get projects details
 const simulateApiRequest = (projectId) => {
   return new Promise((resolve, reject) => {
-    // randomize the response status (success or error)
-    const random = Math.random();
-    if (random < 0.5) {
-      reject('Error: API request failed');
-    }
     setTimeout(() => {
+      // randomize the response status (success or error)
+      if (Math.random() < 0.5) {
+        reject('Error: API request failed, failed to get project details');
+      }
       resolve({
         id: projectId,
         name: 'Project 1',
@@ -135,7 +134,29 @@ const getProjectDetails = async () => {
   }
 };
 
-// TODO: Simulate an API request to refresh the project status
+// TODO: Simulate an API request to update task status
+const updateTaskStatus = (taskId, newStatus) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // randomize the response status (success or error)
+      if (Math.random() < 0.5) {
+        reject('Error: API request failed, failed to update task status');
+      }
+      resolve(`Task ${taskId} status updated to ${newStatus}`);
+    }, 2000);
+  });
+};
+
+// Update task status using the API request
+const updateTask = async (taskId, newStatus) => {
+  try {
+    const response = await updateTaskStatus(taskId, newStatus);
+    console.log('API request successful');
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+};
 // TODO: Implement an observer pattern to notify the project status is completed
 
 // ### Testing the Project class ###
@@ -184,3 +205,6 @@ console.log(criticalTasks(project1));
 
 // ### Testing the API request ###
 getProjectDetails();
+
+// ### Testing the API request to update task status ###
+updateTask(1, 'completed');
