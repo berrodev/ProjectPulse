@@ -81,6 +81,60 @@ const criticalTasks = (project) => {
 };
 
 // TODO: Simulate an API request to get projects details
+const simulateApiRequest = (projectId) => {
+  return new Promise((resolve, reject) => {
+    // randomize the response status (success or error)
+    const random = Math.random();
+    if (random < 0.5) {
+      reject('Error: API request failed');
+    }
+    setTimeout(() => {
+      resolve({
+        id: projectId,
+        name: 'Project 1',
+        startDate: '2024-10-01',
+        tasks: [
+          {
+            id: 1,
+            description: 'Task 1',
+            status: 'pending',
+            deadLine: '2024-11-16',
+          },
+          {
+            id: 2,
+            description: 'Task 2',
+            status: 'active',
+            deadLine: '2025-01-20',
+          },
+          {
+            id: 3,
+            description: 'Task 3',
+            status: 'completed',
+            deadLine: '2024-11-10',
+          },
+          {
+            id: 4,
+            description: 'Task 4',
+            status: 'pending',
+            deadLine: '2024-11-29',
+          },
+        ],
+      });
+    }, 1000);
+  });
+};
+
+// Get project details using the API request
+const getProjectDetails = async () => {
+  try {
+    const project = await simulateApiRequest(1);
+    console.log('API request successful');
+    console.log(project);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // TODO: Simulate an API request to refresh the project status
 // TODO: Implement an observer pattern to notify the project status is completed
 
@@ -127,3 +181,6 @@ console.log(`${daysLeft(project1)} days left to finish the project`);
 // Get critical tasks
 console.log('Critical tasks');
 console.log(criticalTasks(project1));
+
+// ### Testing the API request ###
+getProjectDetails();
