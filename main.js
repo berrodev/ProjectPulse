@@ -1,4 +1,4 @@
-DATABASE = {
+DATABASE_DUMMY = {
   projects: [
     {
       id: 1,
@@ -160,7 +160,7 @@ const fetchProjectData = (projectId) => {
       if (Math.random() < 0.1) {
         reject('Error: API request failed, failed to get project data');
       }
-      const project = DATABASE.projects.find(
+      const project = DATABASE_DUMMY.projects.find(
         (project) => project.id === projectId
       );
       if (!project) {
