@@ -121,6 +121,7 @@ const filterTasks = (project, tasksFilter) => {
 const daysLeft = (project) => {
   // Get all tasks but the completed ones and sort them by deadline
   // TODO: Implement a better way to get the pending tasks using the filterTasks function
+  // TODO: total days using reduce
   const pendingTasks = project.tasks
     .filter((task) => task.status !== 'completed')
     .sort((a, b) => Date.parse(a.deadLine) - Date.parse(b.deadLine));
@@ -190,11 +191,11 @@ const project1 = new Project(1, 'Project 1', '2024-10-01', [
   new Task(3, 'Task 3', 'completed', '2024-11-10'),
   new Task(4, 'Task 4', 'pending', '2024-11-29'),
 ]);
-console.log(project1);
 
 // Add a new task to the project
 const newTask = new Task(5, 'Task 5', 'pending', '2024-01-30');
 project1.addTask(newTask);
+
 console.log(project1);
 
 // Get the project summary
