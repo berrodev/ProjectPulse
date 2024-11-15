@@ -78,8 +78,8 @@ const criticalTasks = (project) => {
   );
 };
 
-// TODO: Simulate an API request to get projects details
-const simulateApiRequest = (projectId) => {
+// TODO: Simulate an API request to get project data
+const fetchProjectData = (projectId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // randomize the response status (success or error)
@@ -203,7 +203,7 @@ console.log('Critical tasks');
 console.log(criticalTasks(project1));
 
 // ### Testing the API request ###
-getProjectDetails();
+fetchProjectData();
 
 // ### Testing the API request to update task status ###
 updateTask(project1, newTask, 'completed');
