@@ -107,10 +107,16 @@ class Task {
   }
 }
 
-// Filter tasks by status
+// Filters
+// Filter completed tasks
 const completedTasksFilter = (task) => task.status === 'completed';
+// Filter active tasks (not completed and deadline is in the future)
+const activeTasksFilter = (task) =>
+  task.status !== 'completed' && new Date(task.deadLine) > new Date();
+// Filter tasks by year
 const currentYearTasksFilter = (task) =>
   new Date(task.deadLine).getFullYear() === new Date().getFullYear();
+// Filter tasks by last year
 const lastYearTasksFilter = (task) =>
   new Date(task.deadLine).getFullYear() === new Date().getFullYear() - 1;
 
@@ -141,9 +147,9 @@ const totalProjectDays = (project) => {
 // TODO: Implement a better way to get the critical tasks using the filterTasks function
 
 const criticalTasks = (project) => {
-  const pendingTasks = project.tasks.filter(
-    (task) => task.status !== 'completed'
-  );
+  // Get the pending tasks
+  const pendingTasks = filterTasks(project, activeTasksFilter);
+
   return pendingTasks.filter(
     (task) =>
       Math.ceil(
