@@ -127,18 +127,16 @@ const filterTasks = (project, tasksFilter) => {
 // Sum the number of days left to finish the project
 const totalProjectDays = (project) => {
   const today = new Date(); // Get today's date
+  // Get the pending tasks
+  const pendingTasks = filterTasks(project, activeTasksFilter);
 
-  return project.tasks.reduce((totalDays, task) => {
-    if (task.status !== 'completed') {
-      // date is in the past
-      if (new Date(task.deadLine) < today) {
-        return totalDays;
-      }
-      const diffTime = new Date(task.deadLine) - today;
-      // Difference between the deadline and today's date
-      const diffDays = diffTime / (1000 * 3600 * 24); // Convert the difference to days
-      totalDays += diffDays;
-    }
+  return pendingTasks.reduce((totalDays, task) => {
+    // Calculate the total days left for each pending task
+    const diffTime = new Date(task.deadLine) - today;
+    // Difference between the deadline and today's date
+    const diffDays = diffTime / (1000 * 3600 * 24); // Convert the difference to days
+    totalDays += diffDays;
+
     return Math.ceil(totalDays);
   }, 0); // The initial value of the accumulator is 0
 };
